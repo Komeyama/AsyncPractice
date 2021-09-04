@@ -1,6 +1,6 @@
 package com.komeyama.asyncpractice
 
-import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.*
 
 class ReactivePractice {
 
@@ -13,5 +13,22 @@ class ReactivePractice {
             }
             emitter.onComplete()
         }
+    }
+
+    fun flowableStringList(backpressureType: BackpressureStrategy): Flowable<String> {
+        return Flowable.create({ emitter ->
+            val messages = listOf(
+                "hello world!",
+                "hello world!!",
+                "hello world!!!",
+                "hello world!!!!",
+                "hello world!!!!!"
+            )
+            messages.forEach { message ->
+                if (emitter.isCancelled) return@create
+                emitter.onNext(message)
+            }
+            emitter.onComplete()
+        }, backpressureType)
     }
 }
