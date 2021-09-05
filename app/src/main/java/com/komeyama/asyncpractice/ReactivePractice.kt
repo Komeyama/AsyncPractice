@@ -6,7 +6,7 @@ class ReactivePractice {
 
     fun observableStringList(): Observable<String> {
         return Observable.create { emitter ->
-            val messages = listOf("hello!", "hello!!", "hello!!!", "hello!!!!", "hello!!!!!")
+            val messages = listOf("1", "2", "3", "4", "5")
             messages.forEach { message ->
                 if (emitter.isDisposed) return@create
                 emitter.onNext(message)
@@ -17,13 +17,7 @@ class ReactivePractice {
 
     fun flowableStringList(backpressureType: BackpressureStrategy): Flowable<String> {
         return Flowable.create({ emitter ->
-            val messages = listOf(
-                "hello world!",
-                "hello world!!",
-                "hello world!!!",
-                "hello world!!!!",
-                "hello world!!!!!"
-            )
+            val messages = listOf("1", "2", "3", "4", "5")
             messages.forEach { message ->
                 if (emitter.isCancelled) return@create
                 emitter.onNext(message)
