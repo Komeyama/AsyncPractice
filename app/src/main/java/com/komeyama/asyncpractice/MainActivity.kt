@@ -11,6 +11,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         subscribers.onObserveObservableStringList()
+        subscribers.onObserveSingleString()
         subscribers.onObserveFlowableStringList()
     }
 

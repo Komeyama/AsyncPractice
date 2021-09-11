@@ -15,6 +15,13 @@ class ReactivePractice {
         }
     }
 
+    fun singleString(): Single<String> {
+        return Single.create { emitter ->
+            val message = "1"
+            emitter.onSuccess(message)
+        }
+    }
+
     fun flowableStringList(backpressureType: BackpressureStrategy): Flowable<String> {
         return Flowable.create({ emitter ->
             val messages = listOf("1", "2", "3", "4", "5")

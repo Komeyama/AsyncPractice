@@ -3,6 +3,7 @@ package com.komeyama.asyncpractice
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.observers.DisposableObserver
+import io.reactivex.rxjava3.observers.DisposableSingleObserver
 import org.reactivestreams.Subscriber
 import org.reactivestreams.Subscription
 import timber.log.Timber
@@ -13,6 +14,7 @@ class ReactiveSubscribers {
     private val reactivePractice: ReactivePractice = ReactivePractice()
 
     val observableStringList = mutableListOf<String>()
+    var singleString = ""
     val flowableStringList = mutableListOf<String>()
 
     fun onObserveObservableStringList() {
@@ -33,6 +35,21 @@ class ReactiveSubscribers {
                     Timber.d("observable message complete!")
                 }
             })
+    }
+
+    fun onObserveSingleString() {
+        reactivePractice.singleString().subscribe(object : DisposableSingleObserver<String>() {
+            override fun onSuccess(t: String?) {
+                Timber.d("single message: $t")
+                if (t != null) {
+                    singleString = t
+                }
+            }
+
+            override fun onError(e: Throwable?) {
+                Timber.d("single message error: ${e?.message}")
+            }
+        })
     }
 
     fun onObserveFlowableStringList() {

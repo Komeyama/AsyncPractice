@@ -22,6 +22,12 @@ class ReactivePracticeTest {
     }
 
     @Test
+    fun singleFlowIsCorrect() {
+        subscribers.onObserveSingleString()
+        Assert.assertTrue("1" == subscribers.singleString)
+    }
+
+    @Test
     fun flowableFlowIsCorrect() {
         subscribers.onObserveFlowableStringList()
         Thread.sleep(1500L)
