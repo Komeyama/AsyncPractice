@@ -22,6 +22,16 @@ class ReactivePractice {
         }
     }
 
+    fun maybeString(message: String = ""): Maybe<String> {
+        return Maybe.create { emitter ->
+            if (message != "") {
+                emitter.onSuccess(message)
+            } else {
+                emitter.onComplete()
+            }
+        }
+    }
+
     fun flowableStringList(backpressureType: BackpressureStrategy): Flowable<String> {
         return Flowable.create({ emitter ->
             val messages = listOf("1", "2", "3", "4", "5")

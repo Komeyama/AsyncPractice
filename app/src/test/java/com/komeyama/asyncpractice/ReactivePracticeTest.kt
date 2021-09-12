@@ -28,6 +28,18 @@ class ReactivePracticeTest {
     }
 
     @Test
+    fun maybeFloeIsSuccess() {
+        subscribers.onObserveMaybeString("1")
+        Assert.assertTrue("1" == subscribers.maybeString)
+    }
+
+    @Test
+    fun maybeFloeIsCompleted() {
+        subscribers.onObserveMaybeString()
+        Assert.assertTrue("0" == subscribers.maybeString)
+    }
+
+    @Test
     fun flowableFlowIsCorrect() {
         subscribers.onObserveFlowableStringList()
         Thread.sleep(1500L)
