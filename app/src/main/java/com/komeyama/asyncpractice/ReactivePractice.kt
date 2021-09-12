@@ -32,6 +32,12 @@ class ReactivePractice {
         }
     }
 
+    fun completable(): Completable {
+        return Completable.create { emitter ->
+            emitter.onComplete()
+        }
+    }
+
     fun flowableStringList(backpressureType: BackpressureStrategy): Flowable<String> {
         return Flowable.create({ emitter ->
             val messages = listOf("1", "2", "3", "4", "5")

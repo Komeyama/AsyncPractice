@@ -14,6 +14,7 @@ class MainActivity : AppCompatActivity() {
         subscribers.onObserveSingleString()
         subscribers.onObserveMaybeString("1")
         subscribers.onObserveMaybeString()
+        subscribers.onObserveCompletable()
         subscribers.onObserveFlowableStringList()
     }
 

@@ -28,7 +28,7 @@ class ReactivePracticeTest {
     }
 
     @Test
-    fun maybeFloeIsSuccess() {
+    fun maybeFloeIsCorrect() {
         subscribers.onObserveMaybeString("1")
         Assert.assertTrue("1" == subscribers.maybeString)
     }
@@ -37,6 +37,12 @@ class ReactivePracticeTest {
     fun maybeFloeIsCompleted() {
         subscribers.onObserveMaybeString()
         Assert.assertTrue("0" == subscribers.maybeString)
+    }
+
+    @Test
+    fun completableIsSuccess() {
+        subscribers.onObserveCompletable()
+        Assert.assertTrue(subscribers.isCompletable)
     }
 
     @Test

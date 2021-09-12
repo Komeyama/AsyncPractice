@@ -1,8 +1,6 @@
 package com.komeyama.asyncpractice
 
-import io.reactivex.rxjava3.core.BackpressureStrategy
-import io.reactivex.rxjava3.core.MaybeObserver
-import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.*
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.observers.DisposableObserver
 import io.reactivex.rxjava3.observers.DisposableSingleObserver
@@ -18,6 +16,7 @@ class ReactiveSubscribers {
     val observableStringList = mutableListOf<String>()
     var singleString = ""
     var maybeString = ""
+    var isCompletable = false
     val flowableStringList = mutableListOf<String>()
 
     fun onObserveObservableStringList() {
@@ -73,6 +72,21 @@ class ReactiveSubscribers {
             override fun onComplete() {
                 maybeString = "0"
                 Timber.d("maybe complete!")
+            }
+        })
+    }
+
+    fun onObserveCompletable() {
+        reactivePractice.completable().subscribe(object : CompletableObserver {
+            override fun onSubscribe(d: Disposable?) {}
+
+            override fun onComplete() {
+                isCompletable = true
+                Timber.d("completable complete!")
+            }
+
+            override fun onError(e: Throwable?) {
+                Timber.d("completable message error: ${e?.message}")
             }
         })
     }
