@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity() {
         subscribers.onObserveMaybeString()
         subscribers.onObserveCompletable()
         subscribers.onObserveFlowableStringList()
+        subscribers.onObservePublishProcessorString()
     }
 
 

@@ -1,8 +1,21 @@
 package com.komeyama.asyncpractice
 
 import io.reactivex.rxjava3.core.*
+import io.reactivex.rxjava3.processors.PublishProcessor
+import java.util.concurrent.TimeUnit
 
 class ReactivePractice {
+
+    val publishProcessor: PublishProcessor<String> = PublishProcessor.create()
+
+    init {
+        Observable.fromArray(arrayListOf("1", "2", "3", "4", "5"))
+            .delay(1000L, TimeUnit.MILLISECONDS).subscribe { messages ->
+            messages.forEach {
+                publishProcessor.onNext(it)
+            }
+        }
+    }
 
     fun observableStringList(): Observable<String> {
         return Observable.create { emitter ->

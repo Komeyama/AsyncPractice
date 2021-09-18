@@ -4,6 +4,7 @@ import io.reactivex.rxjava3.core.*
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.observers.DisposableObserver
 import io.reactivex.rxjava3.observers.DisposableSingleObserver
+import io.reactivex.rxjava3.subscribers.ResourceSubscriber
 import org.reactivestreams.Subscriber
 import org.reactivestreams.Subscription
 import timber.log.Timber
@@ -18,6 +19,7 @@ class ReactiveSubscribers {
     var maybeString = ""
     var isCompletable = false
     val flowableStringList = mutableListOf<String>()
+    val publishProcessorList = mutableListOf<String>()
 
     fun onObserveObservableStringList() {
         reactivePractice.observableStringList()
@@ -118,5 +120,24 @@ class ReactiveSubscribers {
                     Timber.d("flowable message complete!")
                 }
             })
+    }
+
+    fun onObservePublishProcessorString() {
+        reactivePractice.publishProcessor.subscribe(object : ResourceSubscriber<String>() {
+            override fun onNext(t: String?) {
+                Timber.d("publish processor message: $t")
+                t?.let {
+                    publishProcessorList.add(it)
+                }
+            }
+
+            override fun onError(t: Throwable?) {
+                Timber.d("publish processor message error: ${t?.message}")
+            }
+
+            override fun onComplete() {
+                Timber.d("publish processor complete!")
+            }
+        })
     }
 }

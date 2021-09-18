@@ -56,4 +56,20 @@ class ReactivePracticeTest {
             ) == subscribers.flowableStringList
         )
     }
+
+    @Test
+    fun publishProcessorFlowIsCorrect() {
+        subscribers.onObservePublishProcessorString()
+        Thread.sleep(2000L)
+        println(subscribers.publishProcessorList)
+        Assert.assertTrue(
+            mutableListOf(
+                "1",
+                "2",
+                "3",
+                "4",
+                "5"
+            ) == subscribers.publishProcessorList
+        )
+    }
 }
