@@ -11,10 +11,11 @@ class ReactivePractice {
     init {
         Observable.fromArray(arrayListOf("1", "2", "3", "4", "5"))
             .delay(1000L, TimeUnit.MILLISECONDS).subscribe { messages ->
-            messages.forEach {
-                publishProcessor.onNext(it)
+                messages.forEach {
+                    publishProcessor.onNext(it)
+                }
+                publishProcessor.onComplete()
             }
-        }
     }
 
     fun observableStringList(): Observable<String> {
