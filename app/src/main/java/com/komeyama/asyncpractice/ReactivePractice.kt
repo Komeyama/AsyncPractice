@@ -1,21 +1,18 @@
 package com.komeyama.asyncpractice
 
 import io.reactivex.rxjava3.core.*
+import io.reactivex.rxjava3.processors.BehaviorProcessor
 import io.reactivex.rxjava3.processors.PublishProcessor
 import java.util.concurrent.TimeUnit
 
 class ReactivePractice {
 
     val publishProcessor: PublishProcessor<String> = PublishProcessor.create()
+    val behaviorProcessor: BehaviorProcessor<String> = BehaviorProcessor.create()
 
     init {
-        Observable.fromArray(arrayListOf("1", "2", "3", "4", "5"))
-            .delay(1000L, TimeUnit.MILLISECONDS).subscribe { messages ->
-                messages.forEach {
-                    publishProcessor.onNext(it)
-                }
-                publishProcessor.onComplete()
-            }
+        setupPublishProcessor()
+        setupBehaviorProcessorDemo()
     }
 
     fun observableStringList(): Observable<String> {
@@ -61,5 +58,27 @@ class ReactivePractice {
             }
             emitter.onComplete()
         }, backpressureType)
+    }
+
+    private fun setupPublishProcessor() {
+        Observable.fromArray(arrayListOf("1", "2", "3", "4", "5"))
+            .delay(1000L, TimeUnit.MILLISECONDS).subscribe { messages ->
+                messages.forEach {
+                    publishProcessor.onNext(it)
+                }
+                publishProcessor.onComplete()
+            }
+    }
+
+    private fun setupBehaviorProcessorDemo() {
+        arrayListOf("1", "2", "3", "4", "5").forEach {
+            behaviorProcessor.onNext(it)
+        }
+        Observable.just(0L).delay(3000L, TimeUnit.MILLISECONDS).subscribe { messages ->
+            behaviorProcessor.onNext("6")
+            behaviorProcessor.onNext("7")
+            behaviorProcessor.onNext("8")
+            behaviorProcessor.onComplete()
+        }
     }
 }

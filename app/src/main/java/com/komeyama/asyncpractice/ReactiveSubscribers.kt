@@ -20,6 +20,7 @@ class ReactiveSubscribers {
     var isCompletable = false
     val flowableStringList = mutableListOf<String>()
     val publishProcessorList = mutableListOf<String>()
+    val behaviorProcessorList = mutableListOf<String>()
 
     fun onObserveObservableStringList() {
         reactivePractice.observableStringList()
@@ -122,7 +123,7 @@ class ReactiveSubscribers {
             })
     }
 
-    fun onObservePublishProcessorString() {
+    fun onObservePublishProcessorList() {
         reactivePractice.publishProcessor.subscribe(object : ResourceSubscriber<String>() {
             override fun onNext(t: String?) {
                 Timber.d("publish processor message: $t")
@@ -137,6 +138,25 @@ class ReactiveSubscribers {
 
             override fun onComplete() {
                 Timber.d("publish processor complete!")
+            }
+        })
+    }
+
+    fun onObserveBehaviorProcessorList() {
+        reactivePractice.behaviorProcessor.subscribe(object : ResourceSubscriber<String>() {
+            override fun onNext(t: String?) {
+                Timber.d("behavior processor message: $t")
+                t?.let {
+                    behaviorProcessorList.add(it)
+                }
+            }
+
+            override fun onError(t: Throwable?) {
+                Timber.d("behavior processor message error: ${t?.message}")
+            }
+
+            override fun onComplete() {
+                Timber.d("behavior processor complete!")
             }
         })
     }
