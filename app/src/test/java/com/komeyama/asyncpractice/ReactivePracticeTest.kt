@@ -61,7 +61,6 @@ class ReactivePracticeTest {
     fun publishProcessorFlowIsCorrect() {
         subscribers.onObservePublishProcessorList()
         Thread.sleep(2000L)
-        println(subscribers.publishProcessorList)
         Assert.assertTrue(
             mutableListOf(
                 "1",
@@ -76,10 +75,10 @@ class ReactivePracticeTest {
     @Test
     fun behaviorProcessorFlowIsCorrect() {
         // Already notified 1,2,3,4,5, so only 5 is acquired.
-        Thread.sleep(2000)
+        Thread.sleep(2000L)
         subscribers.onObserveBehaviorProcessorList()
         // 6,7,8 and wait for the completion notification
-        Thread.sleep(1000)
+        Thread.sleep(1000L)
         Assert.assertTrue(
             mutableListOf(
                 "5",
@@ -87,6 +86,22 @@ class ReactivePracticeTest {
                 "7",
                 "8"
             ) == subscribers.behaviorProcessorList
+        )
+    }
+
+    @Test
+    fun replayProcessorFlowIsCorrect() {
+        // If less than about 2000ms, be notified.
+        Thread.sleep(1000L)
+        subscribers.onObserveReplayProcessorList()
+        Assert.assertTrue(
+            mutableListOf(
+                "1",
+                "2",
+                "3",
+                "4",
+                "5"
+            ) == subscribers.replayProcessorList
         )
     }
 }

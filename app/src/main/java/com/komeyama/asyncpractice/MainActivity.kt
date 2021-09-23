@@ -18,6 +18,7 @@ class MainActivity : AppCompatActivity() {
         subscribers.onObserveFlowableStringList()
         subscribers.onObservePublishProcessorList()
         subscribers.onObserveBehaviorProcessorList()
+        subscribers.onObserveReplayProcessorList()
     }
 
 }

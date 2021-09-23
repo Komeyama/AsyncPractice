@@ -3,16 +3,20 @@ package com.komeyama.asyncpractice
 import io.reactivex.rxjava3.core.*
 import io.reactivex.rxjava3.processors.BehaviorProcessor
 import io.reactivex.rxjava3.processors.PublishProcessor
+import io.reactivex.rxjava3.processors.ReplayProcessor
+import io.reactivex.rxjava3.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 
 class ReactivePractice {
 
     val publishProcessor: PublishProcessor<String> = PublishProcessor.create()
     val behaviorProcessor: BehaviorProcessor<String> = BehaviorProcessor.create()
+    val replayProcessor: ReplayProcessor<String> = ReplayProcessor.createWithTime(2000, TimeUnit.MILLISECONDS, Schedulers.computation())
 
     init {
-        setupPublishProcessor()
+        setupPublishProcessorDemo()
         setupBehaviorProcessorDemo()
+        setupReplayProcessorDemo()
     }
 
     fun observableStringList(): Observable<String> {
@@ -60,7 +64,7 @@ class ReactivePractice {
         }, backpressureType)
     }
 
-    private fun setupPublishProcessor() {
+    private fun setupPublishProcessorDemo() {
         Observable.fromArray(arrayListOf("1", "2", "3", "4", "5"))
             .delay(1000L, TimeUnit.MILLISECONDS).subscribe { messages ->
                 messages.forEach {
@@ -74,11 +78,20 @@ class ReactivePractice {
         arrayListOf("1", "2", "3", "4", "5").forEach {
             behaviorProcessor.onNext(it)
         }
-        Observable.just(0L).delay(3000L, TimeUnit.MILLISECONDS).subscribe { messages ->
+        Observable.just(0L).delay(3000L, TimeUnit.MILLISECONDS).subscribe {
             behaviorProcessor.onNext("6")
             behaviorProcessor.onNext("7")
             behaviorProcessor.onNext("8")
             behaviorProcessor.onComplete()
+        }
+    }
+
+    private fun setupReplayProcessorDemo() {
+        Observable.fromArray(arrayListOf("1", "2", "3", "4", "5")).subscribe { messages ->
+            messages.forEach {
+                replayProcessor.onNext(it)
+            }
+            replayProcessor.onComplete()
         }
     }
 }
