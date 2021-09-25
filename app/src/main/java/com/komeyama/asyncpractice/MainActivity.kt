@@ -19,6 +19,7 @@ class MainActivity : AppCompatActivity() {
         subscribers.onObservePublishProcessorList()
         subscribers.onObserveBehaviorProcessorList()
         subscribers.onObserveReplayProcessorList()
+        subscribers.onObserveAsyncProcessorList()
     }
 
 }

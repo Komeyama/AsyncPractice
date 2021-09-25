@@ -104,4 +104,15 @@ class ReactivePracticeTest {
             ) == subscribers.replayProcessorList
         )
     }
+
+    @Test
+    fun asyncProcessorFlowIsCorrect() {
+        subscribers.onObserveAsyncProcessorList()
+        Thread.sleep(2000L)
+        Assert.assertTrue(
+            mutableListOf(
+                "5"
+            ) == subscribers.asyncProcessorList
+        )
+    }
 }

@@ -22,6 +22,7 @@ class ReactiveSubscribers {
     val publishProcessorList = mutableListOf<String>()
     val behaviorProcessorList = mutableListOf<String>()
     val replayProcessorList = mutableListOf<String>()
+    val asyncProcessorList = mutableListOf<String>()
 
     fun onObserveObservableStringList() {
         reactivePractice.observableStringList()
@@ -177,6 +178,25 @@ class ReactiveSubscribers {
 
             override fun onComplete() {
                 Timber.d("replay processor complete!")
+            }
+        })
+    }
+
+    fun onObserveAsyncProcessorList() {
+        reactivePractice.asyncProcessor.subscribe(object : ResourceSubscriber<String>() {
+            override fun onNext(t: String?) {
+                Timber.d("async processor message: $t")
+                t?.let {
+                    asyncProcessorList.add(it)
+                }
+            }
+
+            override fun onError(t: Throwable?) {
+                Timber.d("async processor message error: ${t?.message}")
+            }
+
+            override fun onComplete() {
+                Timber.d("async processor complete!")
             }
         })
     }

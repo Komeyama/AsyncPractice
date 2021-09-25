@@ -1,6 +1,7 @@
 package com.komeyama.asyncpractice
 
 import io.reactivex.rxjava3.core.*
+import io.reactivex.rxjava3.processors.AsyncProcessor
 import io.reactivex.rxjava3.processors.BehaviorProcessor
 import io.reactivex.rxjava3.processors.PublishProcessor
 import io.reactivex.rxjava3.processors.ReplayProcessor
@@ -12,11 +13,13 @@ class ReactivePractice {
     val publishProcessor: PublishProcessor<String> = PublishProcessor.create()
     val behaviorProcessor: BehaviorProcessor<String> = BehaviorProcessor.create()
     val replayProcessor: ReplayProcessor<String> = ReplayProcessor.createWithTime(2000, TimeUnit.MILLISECONDS, Schedulers.computation())
+    val asyncProcessor: AsyncProcessor<String> = AsyncProcessor.create()
 
     init {
         setupPublishProcessorDemo()
         setupBehaviorProcessorDemo()
         setupReplayProcessorDemo()
+        setupAsyncProcessorDemo()
     }
 
     fun observableStringList(): Observable<String> {
@@ -93,5 +96,12 @@ class ReactivePractice {
             }
             replayProcessor.onComplete()
         }
+    }
+
+    private fun setupAsyncProcessorDemo() {
+        arrayListOf("1", "2", "3", "4", "5").forEach {
+            asyncProcessor.onNext(it)
+        }
+        asyncProcessor.onComplete()
     }
 }
