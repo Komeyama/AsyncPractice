@@ -17,7 +17,7 @@ class CoroutinePractice {
             if (isRequest) {
                 Result.Success(SimpleResult(listOf("1", "2", "3", "4", "5")))
             } else {
-                Result.Error(java.lang.Exception("simple result is error!"))
+                Result.Error(Exception("simple result is error!"))
             }
         }
     }
