@@ -6,6 +6,7 @@ import android.os.Bundle
 class MainActivity : AppCompatActivity() {
 
     private val subscribers: ReactiveSubscribers = ReactiveSubscribers()
+    private val simpleViewModel: SimpleViewModel = SimpleViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,6 +21,7 @@ class MainActivity : AppCompatActivity() {
         subscribers.onObserveBehaviorProcessorList()
         subscribers.onObserveReplayProcessorList()
         subscribers.onObserveAsyncProcessorList()
-    }
 
+        simpleViewModel.simpleRequest(true)
+    }
 }
