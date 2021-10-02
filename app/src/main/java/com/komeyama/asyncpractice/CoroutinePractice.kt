@@ -1,6 +1,8 @@
 package com.komeyama.asyncpractice
 
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.withContext
 
 class CoroutinePractice {
@@ -12,6 +14,9 @@ class CoroutinePractice {
 
     data class SimpleResult(val array: List<String>)
 
+    private val _stateFlow = MutableStateFlow("0")
+    val stateFlow: StateFlow<String> = _stateFlow
+
     suspend fun simpleRequest(isRequest: Boolean): Result<SimpleResult> {
         return withContext(Dispatchers.IO) {
             if (isRequest) {
@@ -19,6 +24,12 @@ class CoroutinePractice {
             } else {
                 Result.Error(Exception("simple result is error!"))
             }
+        }
+    }
+
+    fun simpleFlowEmit() {
+        listOf("1", "2", "3", "4", "5").forEach {
+            _stateFlow.value = it
         }
     }
 }

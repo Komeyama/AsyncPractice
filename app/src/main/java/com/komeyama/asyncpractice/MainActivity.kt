@@ -23,5 +23,6 @@ class MainActivity : AppCompatActivity() {
         subscribers.onObserveAsyncProcessorList()
 
         simpleViewModel.simpleRequest(true)
+        simpleViewModel.simpleFlow()
     }
 }

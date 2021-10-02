@@ -6,11 +6,8 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.test.setMain
-import org.junit.After
+import org.junit.*
 import org.junit.Assert.assertEquals
-import org.junit.Before
-import org.junit.Rule
-import org.junit.Test
 
 class SimpleViewModelTest {
 
@@ -50,6 +47,23 @@ class SimpleViewModelTest {
         assertEquals(
             CoroutinePractice.Result.Error(Exception("simple result is error!")).toString(),
             LiveDataTestUtil.getValue(simpleViewModel.resultLivaData).toString()
+        )
+    }
+
+    @ExperimentalCoroutinesApi
+    @Test
+    fun simpleFlowIsSuccess() = runBlockingTest {
+        val simpleViewModel = SimpleViewModel()
+        simpleViewModel.simpleFlow()
+        Assert.assertTrue(
+            mutableListOf(
+                "0",
+                "1",
+                "2",
+                "3",
+                "4",
+                "5"
+            ) == simpleViewModel.flowStringList
         )
     }
 }
