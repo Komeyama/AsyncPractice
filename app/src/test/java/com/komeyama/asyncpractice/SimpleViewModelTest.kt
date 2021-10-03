@@ -66,4 +66,21 @@ class SimpleViewModelTest {
             ) == simpleViewModel.flowStringList
         )
     }
+
+    @ExperimentalCoroutinesApi
+    @Test
+    fun simpleSharedFlowIsSuccess() = runBlockingTest {
+        val simpleViewModel = SimpleViewModel()
+        simpleViewModel.simpleSharedFlow()
+        Assert.assertTrue(
+            mutableListOf(
+                "0",
+                "1",
+                "2",
+                "3",
+                "4",
+                "5"
+            ) == simpleViewModel.sharedFlowStringList
+        )
+    }
 }

@@ -24,5 +24,6 @@ class MainActivity : AppCompatActivity() {
 
         simpleViewModel.simpleRequest(true)
         simpleViewModel.simpleFlow()
+        simpleViewModel.simpleSharedFlow()
     }
 }

@@ -13,6 +13,7 @@ class SimpleViewModel : ViewModel() {
     val resultLivaData: LiveData<CoroutinePractice.Result<CoroutinePractice.SimpleResult>> =
         _resultLivaData
     val flowStringList = mutableListOf<String>()
+    val sharedFlowStringList = mutableListOf<String>()
 
     fun simpleRequest(isRequest: Boolean) {
         viewModelScope.launch {
@@ -30,5 +31,15 @@ class SimpleViewModel : ViewModel() {
             }
         }
         coroutinePractice.simpleFlowEmit()
+    }
+
+    fun simpleSharedFlow() {
+        viewModelScope.launch {
+            coroutinePractice.sharedFlow.collect { result ->
+                Timber.d("simple shared flow result: $result")
+                sharedFlowStringList.add(result)
+            }
+        }
+        coroutinePractice.simpleSharedFlow()
     }
 }
