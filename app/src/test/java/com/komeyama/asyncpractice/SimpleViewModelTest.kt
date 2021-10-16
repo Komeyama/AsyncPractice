@@ -3,6 +3,7 @@ package com.komeyama.asyncpractice
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.test.setMain
@@ -72,9 +73,9 @@ class SimpleViewModelTest {
     fun simpleSharedFlowIsSuccess() = runBlockingTest {
         val simpleViewModel = SimpleViewModel()
         simpleViewModel.simpleSharedFlow()
+        delay(2000L)
         Assert.assertTrue(
             mutableListOf(
-                "0",
                 "1",
                 "2",
                 "3",

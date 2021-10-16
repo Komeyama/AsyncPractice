@@ -1,6 +1,7 @@
 package com.komeyama.asyncpractice
 
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -17,7 +18,9 @@ class CoroutinePractice {
 
     private val _stateFlow = MutableStateFlow("0")
     val stateFlow: StateFlow<String> = _stateFlow
-    private val _sharedFlow = MutableStateFlow("0")
+
+    private val sharedEmitValues = listOf("1", "2", "3", "4", "5")
+    private val _sharedFlow = MutableSharedFlow<String>(sharedEmitValues.size)
     val sharedFlow: SharedFlow<String> = _sharedFlow
 
     suspend fun simpleRequest(isRequest: Boolean): Result<SimpleResult> {
@@ -36,9 +39,9 @@ class CoroutinePractice {
         }
     }
 
-    fun simpleSharedFlow() {
-        listOf("1", "2", "3", "4", "5").forEach {
-            _sharedFlow.value = it
+    suspend fun simpleSharedFlow() {
+        sharedEmitValues.forEach {
+            _sharedFlow.emit(it)
         }
     }
 }

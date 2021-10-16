@@ -1,7 +1,10 @@
 package com.komeyama.asyncpractice
 
 import androidx.lifecycle.*
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -35,11 +38,11 @@ class SimpleViewModel : ViewModel() {
 
     fun simpleSharedFlow() {
         viewModelScope.launch {
-            coroutinePractice.sharedFlow.collect { result ->
+            coroutinePractice.sharedFlow.onEach { result ->
                 Timber.d("simple shared flow result: $result")
                 sharedFlowStringList.add(result)
-            }
+            }.launchIn(GlobalScope)
+            coroutinePractice.simpleSharedFlow()
         }
-        coroutinePractice.simpleSharedFlow()
     }
 }
